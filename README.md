@@ -18,3 +18,12 @@ behave when it receives a connection request from a browser.
 3. `response` binding constructs the complete response by formatting the **status line**, **content length**, and **actual contents** of the file into a single string using `format!` macro.
 4. `stream.write_all(response.as_bytes()).unwrap();` writes the response to the `TcpStream` by converting it to bytes and using `write_all` method.
 
+# Commit 3 Reflection notes
+![image](https://github.com/sorfeb/advprog-modul6/assets/112263712/9c8b5f40-3127-4de4-a67c-fc6112f021b5)
+> How to split between response and why the refactoring is needed.
+
+The `if-else` statement that checks the request to `GET / HTTP/1.1`:
+- It will show `hello.html` if response to request = `HTTP/1.1 200 OK`
+- It will show `404.html` if response to request = `HTTP/1.1 404 NOT FOUND`
+
+Refactoring is needed to make the code more concise by pulling out those differences into separate `if` and `else` lines that will assign the values of the `status_line` and the `filename` to variables. We can then use those variables unconditionally in the code to read the file and write the response and makes it easier to see the difference between the two cases, and it means we have only one place to update the code if we want to change how the file reading and response writing work.
