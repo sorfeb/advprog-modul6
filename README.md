@@ -19,7 +19,7 @@ behave when it receives a connection request from a browser.
 4. `stream.write_all(response.as_bytes()).unwrap();` writes the response to the `TcpStream` by converting it to bytes and using `write_all` method.
 
 # Commit 3 Reflection notes
-![image](https://github.com/sorfeb/advprog-modul6/assets/112263712/9c8b5f40-3127-4de4-a67c-fc6112f021b5)
+![image](https://github.com/sorfeb/advprog-modul6/assets/112263712/6969ac58-2515-4561-82df-85ebf29985ca)
 > How to split between response and why the refactoring is needed.
 
 The `if-else` statement that checks the request to `GET / HTTP/1.1`:
