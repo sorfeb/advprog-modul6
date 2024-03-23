@@ -27,3 +27,12 @@ The `if-else` statement that checks the request to `GET / HTTP/1.1`:
 - It will show `404.html` if response to request = `HTTP/1.1 404 NOT FOUND`
 
 Refactoring is needed to make the code more concise by pulling out those differences into separate `if` and `else` lines that will assign the values of the `status_line` and the `filename` to variables. We can then use those variables unconditionally in the code to read the file and write the response and makes it easier to see the difference between the two cases, and it means we have only one place to update the code if we want to change how the file reading and response writing work.
+
+# Commit 4 Reflection notes
+> Let’s open two of browser windows, try `127.0.0.1/sleep` in one of them, and try in other
+windows `127.0.0.1`. Pay attention that the browser take some time to load. You can imagine if many users try to access it.
+See how it works and try to understand why it works like that.
+
+When we try to access the `/sleep` endpoint, the new `handle_connection` function sleeps for 10 seconds 
+, which delays processing the request.
+The function doesn't use multithreading, causing `/` requests to be blocked until the `/sleep` request is processed.
