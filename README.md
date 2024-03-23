@@ -36,3 +36,23 @@ See how it works and try to understand why it works like that.
 When we try to access the `/sleep` endpoint, the new `handle_connection` function sleeps for 10 seconds 
 , which delays processing the request.
 The function doesn't use multithreading, causing `/` requests to be blocked until the `/sleep` request is processed.
+
+# Commit 5 Reflection notes
+> Try to understand how the ThreadPool works. 
+
+A thread pool is a mechanism for managing a **group of threads** to execute tasks **concurrently**. 
+It's particularly useful in scenarios where creating and destroying threads frequently can lead to performance overhead.
+
+1. struct `ThreadPool` :
+- holds a group of worker threads and a channel sender for sending jobs (tasks) to be executed by the workers.
+- The constructor takes a parameter `size`, which determines the number of worker threads in the pool.
+- Inside the constructor, it creates a channel with a `sender (mpsc::Sender)` and a `receiver (mpsc::Receiver)`. 
+- The `sender` is used to send jobs to the worker threads.
+
+2. struct `Worker` :
+- represents an individual worker thread in the thread pool.
+- Each worker has a unique identifier (`id`) and a `thread::JoinHandle<()>` that represents the thread's execution handle.
+- The new method of Worker creates a new worker thread. It takes an `Arc<Mutex<mpsc::Receiver<Job>>>` as input, 
+which allows it to receive jobs from the channel shared with the ThreadPool.
+- Inside the new method, a new thread is spawned using thread::spawn, and it continuously loops, waiting to receive jobs from the channel. When a job is received, it's executed.
+execute Method:
