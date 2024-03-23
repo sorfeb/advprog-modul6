@@ -22,6 +22,8 @@ behave when it receives a connection request from a browser.
 ![image](https://github.com/sorfeb/advprog-modul6/assets/112263712/6969ac58-2515-4561-82df-85ebf29985ca)
 > How to split between response and why the refactoring is needed.
 
+![image](https://github.com/sorfeb/advprog-modul6/assets/112263712/d70aa862-954d-4a6e-88d2-a45e06a6d99a)
+
 The `if-else` statement that checks the request to `GET / HTTP/1.1`:
 - It will show `hello.html` if response to request = `HTTP/1.1 200 OK`
 - It will show `404.html` if response to request = `HTTP/1.1 404 NOT FOUND`
