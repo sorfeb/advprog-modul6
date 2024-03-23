@@ -56,3 +56,17 @@ It's particularly useful in scenarios where creating and destroying threads freq
 which allows it to receive jobs from the channel shared with the ThreadPool.
 - Inside the new method, a new thread is spawned using thread::spawn, and it continuously loops, waiting to receive jobs from the channel. When a job is received, it's executed.
 execute Method:
+
+# Commit Bonus Reflection notes
+> Try to create a function build as a replacement to new and
+compare.
+
+`new`:
+- directly constructs the ThreadPool struct,
+- construction logic is encapsulated within the ThreadPool struct itself.
+
+`build`:
+- creates worker threads outside the struct.
+- constructs a ThreadPool instance using the created channel and worker threads.
+- Returns an error if pool size is <= 0;
+- promotes better code organization by abstracting the construction details from the ThreadPool struct.

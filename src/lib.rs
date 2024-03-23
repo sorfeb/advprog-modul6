@@ -15,23 +15,21 @@ impl ThreadPool {
     ///
     /// The size is the number of threads in the pool.
     ///
-    /// # Panics
+    /// # Errors
     ///
-    /// The `new` function will panic if the size is zero.
-    pub fn new(size: usize) -> ThreadPool {
-        assert!(size > 0);
-
-        let (sender, receiver) = mpsc::channel();
-
-        let receiver = Arc::new(Mutex::new(receiver));
-
-        let mut workers = Vec::with_capacity(size);
-
-        for id in 0..size {
-            workers.push(Worker::new(id, Arc::clone(&receiver)));
+    /// Returns an error if the size is zero.
+    pub fn build(size: usize) -> Result<ThreadPool, &'static str> {
+        if size == 0 {
+            return Err("Size must be greater than zero");
         }
 
-        ThreadPool { workers, sender }
+        let (sender, receiver) = mpsc::channel();
+        let receiver = Arc::new(Mutex::new(receiver));
+        let workers = (0..size)
+            .map(|id| Worker::new(id, Arc::clone(&receiver)))
+            .collect();
+
+        Ok(ThreadPool { workers, sender })
     }
 
     pub fn execute<F>(&self, f: F)
